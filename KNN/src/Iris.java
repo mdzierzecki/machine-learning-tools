@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Iris {
+    int Number;
     double sepalLength;
     double sepalWidth;
     double petalLength;
     double petalWidth;
     String result;
 
-    public Iris(double sepalLength, double sepalWidth, double petalLength, double petalWidth, String result) {
+    public Iris(int number, double sepalLength, double sepalWidth, double petalLength, double petalWidth, String result) {
+        Number = number;
         this.sepalLength = sepalLength;
         this.sepalWidth = sepalWidth;
         this.petalLength = petalLength;
@@ -19,7 +21,8 @@ public class Iris {
         this.result = result;
     }
 
-    public Iris(double sepalLength, double sepalWidth, double petalLength, double petalWidth) {
+    public Iris(int number, double sepalLength, double sepalWidth, double petalLength, double petalWidth) {
+        Number = number;
         this.sepalLength = sepalLength;
         this.sepalWidth = sepalWidth;
         this.petalLength = petalLength;
@@ -40,8 +43,9 @@ public class Iris {
                 if(i != 0) {
                     // use comma as separator
                     String[] element = line.split(cvsSplitBy);
-
-                    Iris newIris = new Iris(Double.parseDouble(element[1]), Double.parseDouble(element[2]),
+                    String element0 = element[0];
+                    element0 = element0.replaceAll("[^0-9]+", "");
+                    Iris newIris = new Iris(Integer.parseInt(element0), Double.parseDouble(element[1]), Double.parseDouble(element[2]),
                             Double.parseDouble(element[3]), Double.parseDouble(element[4]), element[5]);
 
                     irisArray.add(newIris);
@@ -72,12 +76,17 @@ public class Iris {
     @Override
     public String toString() {
         return "Iris{" +
-                "sepalLength=" + sepalLength +
+                "Number=" + Number +
+                ", sepalLength=" + sepalLength +
                 ", sepalWidth=" + sepalWidth +
                 ", petalLength=" + petalLength +
                 ", petalWidth=" + petalWidth +
                 ", result='" + result + '\'' +
                 '}';
+    }
+
+    public int getNumber() {
+        return Number;
     }
 
     public double getSepalLength() {
