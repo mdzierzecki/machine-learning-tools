@@ -1,6 +1,9 @@
 
 import java.util.ArrayList;
 import java.lang.Math;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Main {
@@ -11,21 +14,22 @@ public class Main {
         Iris newIris = new Iris(4.6, 3.1, 1.5, 0.2);
         System.out.println(trainIrisArray.get(1));
         System.out.println(newIris);
-        double result = computeDistance(trainIrisArray.get(1), newIris) ;
-        System.out.println(result);
+        Map<Iris, Double> distanceMap = new HashMap<>();
+
+        ArrayList<Double> distanceArray = new ArrayList<>();
+        for (Iris iris: trainIrisArray) {
+            double distanceResult = computeDistance(iris, newIris);
+            distanceMap.put(iris, distanceResult);
+            distanceArray.add(distanceResult);
+        }
+
+        System.out.println(distanceArray.get(0));
+
+        int minIndex = distanceArray.indexOf(Collections.min(distanceArray));
 
         FindClosest fc = new FindClosest();
-
-        int arr[] = {12, 16, 22, 30, 35, 39, 42,
-                45, 48, 50, 53, 55, 56
-        };
-        int n = arr.length;
-        int x = 35, k = 4;
-
-        ArrayList<Integer> resultList = fc.giveKclosest(arr, x, 4, n);
-
-        System.out.println(resultList);
-
+        System.out.println(distanceArray.get(minIndex));
+        System.out.println(trainIrisArray.get(minIndex));
     }
 
 
