@@ -115,7 +115,7 @@ public class FindClosest {
                 i++;
             }
 
-            
+
             return findWord(resultsArr);
         } else {
             throw new IllegalArgumentException("K must be a number from 1 to infinity");
