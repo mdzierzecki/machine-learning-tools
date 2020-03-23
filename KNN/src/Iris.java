@@ -29,6 +29,13 @@ public class Iris {
         this.petalWidth = petalWidth;
     }
 
+    public Iris(double sepalLength, double sepalWidth, double petalLength, double petalWidth) {
+        this.sepalLength = sepalLength;
+        this.sepalWidth = sepalWidth;
+        this.petalLength = petalLength;
+        this.petalWidth = petalWidth;
+    }
+
     public static ArrayList<Iris> createIrisesCsv(String csvFile){
         BufferedReader br = null;
         String line = "";
