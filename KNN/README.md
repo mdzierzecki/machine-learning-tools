@@ -1,3 +1,3 @@
 # KNN 
 
-Thui is
+Thui i
