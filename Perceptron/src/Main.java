@@ -40,12 +40,12 @@ public class Main {
         }
 
 
-        System.out.println(neuronVersicolor.check(new Record(7, 5.9, 3, 5.1, 1.8, "bb")));
+        System.out.println(neuronVirginica.check(new Record(7, 6.7, 3.3, 5.7, 2.1, "bb")));
 
-//        checkRecord(testRecords, neuronSetosa, neuronVersicolor, neuronVirginica);
+//        checkRecords(testRecords, neuronSetosa, neuronVersicolor, neuronVirginica);
     }
 
-    public static void checkRecord(List<Record> testRecords, Neuron neuron1, Neuron neuron2, Neuron neuron3) {
+    public static void checkRecords(List<Record> testRecords, Neuron neuron1, Neuron neuron2, Neuron neuron3) {
         for (int i=0; i<testRecords.size(); i++) {
             if (neuron1.check(testRecords.get(i))) {
                 System.out.println(testRecords.get(i).id + ". " + neuron1.irisType);

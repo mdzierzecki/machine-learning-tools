@@ -16,7 +16,7 @@ public class Neuron {
     }
 
     public void train() {
-        Collections.shuffle(records);
+        Collections.shuffle(this.records);
 
         for (int i=0; i<records.size(); i++) {
 
