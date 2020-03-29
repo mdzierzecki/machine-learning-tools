@@ -10,7 +10,7 @@ public class Main {
         FindClosest fc = new FindClosest();
 
         for (Iris testIris: testIrisArray) {
-            System.out.println(testIris.getNumber() +  " | " + fc.findResultIris(trainIrisArray, testIris, 5));;
+            System.out.println(testIris.getNumber() +  " | " + fc.findResultIris(trainIrisArray, testIris, 1));;
         }
 
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
