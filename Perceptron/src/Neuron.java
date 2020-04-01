@@ -45,11 +45,8 @@ public class Neuron {
     public boolean check(Record record) {
         double output = record.data[0] * weights[0] + record.data[1] * weights[1]
                 + record.data[2] * weights[2] + record.data[3] * weights[3];
-        if (output>0) {
-            return true;
-        } else {
-            return false;
-        }
+        return output > 0;
+
     }
 
 
