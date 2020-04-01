@@ -1,16 +1,12 @@
 package gui;
 
-
 import neurons.Compute;
 import program.Record;
-
 import java.awt.EventQueue;
-
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-
 
 public class Window {
 
@@ -19,19 +15,18 @@ public class Window {
     private JTextField sepalWidthField;
     private JTextField petalLengthField;
     private JTextField petalWidthField;
+    private Compute compute;
 
     /**
      * Launch the application.
      */
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Window window = new Window();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                Window window = new Window();
+                window.frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -41,6 +36,12 @@ public class Window {
      */
     public Window() {
         initialize();
+
+        try {
+            compute = new Compute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -103,23 +104,14 @@ public class Window {
 
         btnSubmit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-//                if(textField.getText().isEmpty()||(textField_1.getText().isEmpty())||(textField_2.getText().isEmpty())||(textArea_1.getText().isEmpty())||((radioButton_1.isSelected())&&(radioButton.isSelected()))||(comboBox.getSelectedItem().equals("Select")))
-//                    JOptionPane.showMessageDialog(null, "Data Missing");
-//                else
-//                    JOptionPane.showMessageDialog(null, "Data Submitted");
                 double sepalLength = Double.parseDouble(sepalLengthField.getText());
-                double sepalWidth = Double.parseDouble(sepalLengthField.getText());
+                double sepalWidth = Double.parseDouble(sepalWidthField.getText());
                 double petalLength = Double.parseDouble(petalLengthField.getText());
-                double petalWidth = Double.parseDouble(sepalLengthField.getText());
+                double petalWidth = Double.parseDouble(petalWidthField.getText());
                 Record testRecord = new Record(sepalLength, sepalWidth, petalLength, petalWidth);
                 String result = null;
-                try {
-                    Compute compute = new Compute();
-                    result = compute.checkRecord(testRecord);
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                result = compute.checkRecord(testRecord);
 
                 JOptionPane.showMessageDialog(null, "Your Iris is: " + result);
             }
@@ -130,8 +122,6 @@ public class Window {
                 sepalWidthField.setText(null);
                 petalLengthField.setText(null);
                 sepalLengthField.setText(null);
-
-
             }
         });
 

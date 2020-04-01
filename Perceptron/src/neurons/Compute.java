@@ -31,20 +31,21 @@ public class Compute {
                 .collect(Collectors.toList());
 
         neuronSetosa = new Neuron(trainRecords, "setosa");
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<100000; i++) {
             neuronSetosa.train();
         }
 
         neuronVersicolor = new Neuron(trainRecords, "versicolor");
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<100000; i++) {
             neuronVersicolor.train();
         }
 
         neuronVirginica = new Neuron(trainRecords, "virginica");
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<100000; i++) {
             neuronVirginica.train();
         }
 
+        compute();
     }
 
     public void compute() throws IOException{
