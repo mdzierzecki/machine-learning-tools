@@ -1,11 +1,13 @@
+package program;
+
 import java.util.Arrays;
 
 public class Record {
-    int id;
-    double[] data = new double[4];
-    String type;
+    public int id;
+    public double[] data = new double[4];
+    public String type;
 
-    Record (String fileLine) {
+    public Record (String fileLine) {
         String[] tokens = fileLine.split(",");
 
         id = Integer.parseInt(tokens[0].replaceAll("\"", ""));
@@ -17,7 +19,16 @@ public class Record {
         type = tokens[5].replaceAll("\"", "");
     }
 
-    Record (int id, double a, double b, double c, double d, String type) {
+    public Record (int id, double a, double b, double c, double d, String type) {
+        this.id = id;
+        data[0] = a;
+        data[1] = b;
+        data[2] = c;
+        data[3] = d;
+        this.type = type;
+    }
+
+    public Record (double a, double b, double c, double d) {
         this.id = id;
         data[0] = a;
         data[1] = b;
@@ -28,7 +39,7 @@ public class Record {
 
     @Override
     public String toString() {
-        return "Record{" +
+        return "program.Record{" +
                 "id=" + id +
                 ", data=" + Arrays.toString(data) +
                 ", type='" + type + '\'' +

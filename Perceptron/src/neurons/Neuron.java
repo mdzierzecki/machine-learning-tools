@@ -1,6 +1,9 @@
+package neurons;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import program.Record;
 
 public class Neuron {
     double[] weights;
