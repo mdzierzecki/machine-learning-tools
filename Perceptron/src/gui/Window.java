@@ -4,8 +4,6 @@ import neurons.Compute;
 import program.Record;
 import java.awt.EventQueue;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Window {
@@ -16,6 +14,7 @@ public class Window {
     private JTextField petalLengthField;
     private JTextField petalWidthField;
     private Compute compute;
+    String result;
 
     /**
      * Launch the application.
@@ -53,7 +52,7 @@ public class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel lblSepalLength = new JLabel("Sepal length");
+        JLabel lblSepalLength = new JLabel("SepalL");
         lblSepalLength.setBounds(65, 31, 46, 14);
         frame.getContentPane().add(lblSepalLength);
 
@@ -64,7 +63,7 @@ public class Window {
         sepalLengthField.setColumns(10);
 
 
-        JLabel lblSepalWidth = new JLabel("Sepal Width");
+        JLabel lblSepalWidth = new JLabel("SepalW");
         lblSepalWidth.setBounds(65, 68, 46, 14);
         frame.getContentPane().add(lblSepalWidth);
 
@@ -73,7 +72,7 @@ public class Window {
         frame.getContentPane().add(sepalWidthField);
         sepalWidthField.setColumns(10);
 
-        JLabel lblPetalLength = new JLabel("Petal length");
+        JLabel lblPetalLength = new JLabel("PetalL");
         lblPetalLength.setBounds(65, 115, 46, 14);
         frame.getContentPane().add(lblPetalLength);
 
@@ -82,8 +81,8 @@ public class Window {
         frame.getContentPane().add(petalLengthField);
         petalLengthField.setColumns(10);
 
-        JLabel lblPetalWidth = new JLabel("Petal width");
-        lblPetalWidth.setBounds(65, 200, 50, 14);
+        JLabel lblPetalWidth = new JLabel("PetalW");
+        lblPetalWidth.setBounds(65, 150, 50, 14);
         frame.getContentPane().add(lblPetalWidth);
 
         petalWidthField = new JTextField();
@@ -96,33 +95,30 @@ public class Window {
         btnClear.setBounds(312, 387, 89, 23);
         frame.getContentPane().add(btnClear);
 
-        JButton btnSubmit = new JButton("submit");
+        JButton btnSubmit = new JButton("Submit");
 
         btnSubmit.setBounds(65, 387, 89, 23);
         frame.getContentPane().add(btnSubmit);
 
 
-        btnSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                double sepalLength = Double.parseDouble(sepalLengthField.getText());
-                double sepalWidth = Double.parseDouble(sepalWidthField.getText());
-                double petalLength = Double.parseDouble(petalLengthField.getText());
-                double petalWidth = Double.parseDouble(petalWidthField.getText());
-                Record testRecord = new Record(sepalLength, sepalWidth, petalLength, petalWidth);
-                String result = null;
+        btnSubmit.addActionListener(arg0 -> {
+            double sepalLength = Double.parseDouble(sepalLengthField.getText());
+            double sepalWidth = Double.parseDouble(sepalWidthField.getText());
+            double petalLength = Double.parseDouble(petalLengthField.getText());
+            double petalWidth = Double.parseDouble(petalWidthField.getText());
+            Record testRecord = new Record(sepalLength, sepalWidth, petalLength, petalWidth);
 
-                result = compute.checkRecord(testRecord);
 
-                JOptionPane.showMessageDialog(null, "Your Iris is: " + result);
-            }
+            result = compute.checkRecord(testRecord);
+
+            JOptionPane.showMessageDialog(null, "Your Iris is: " + result);
         });
 
-        btnClear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sepalWidthField.setText(null);
-                petalLengthField.setText(null);
-                sepalLengthField.setText(null);
-            }
+        btnClear.addActionListener(e -> {
+            sepalWidthField.setText(null);
+            petalLengthField.setText(null);
+            sepalLengthField.setText(null);
+            petalWidthField.setText(null);
         });
 
     }
