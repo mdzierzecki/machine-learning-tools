@@ -8,12 +8,14 @@ import program.Record;
 public class Neuron {
     double[] weights;
     double alfa;
+    double bias;
     List<Record> records;
     String irisType;
 
     public Neuron(List<Record> records, String irisType) {
         this.weights = new double[]{20, 5, 2, 9};
         this.alfa = 0.5;
+        this.bias = 0;
         this.records = records;
         this.irisType = irisType;
     }
@@ -26,12 +28,13 @@ public class Neuron {
             int d = (records.get(i).type.equals(irisType)) ? 1 : 0;
 
             double output = records.get(i).data[0] * weights[0] + records.get(i).data[1] * weights[1]
-                    + records.get(i).data[2] * weights[2] + records.get(i).data[3] * weights[3];
+                    + records.get(i).data[2] * weights[2] + records.get(i).data[3] * weights[3] - bias;
 
             double[] inputs =  Arrays.copyOf(records.get(i).data, records.get(i).data.length);
 
-            int y = (output>0) ? 1: 0;
+            int y = (output>0) ? 1 : 0;
 
+            // theta
             if (d - y == -1 || d - y == 1) {
                 for (int j=0; j<inputs.length; j++) {
                     inputs[j] = alfa*(d-y)*inputs[j];
@@ -41,6 +44,8 @@ public class Neuron {
                     weights[j] = weights[j]+inputs[j];
                 }
             }
+
+            bias = bias - (d-y) * alfa;
 
         }
     }

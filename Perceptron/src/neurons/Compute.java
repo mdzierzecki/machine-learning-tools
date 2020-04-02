@@ -49,7 +49,6 @@ public class Compute {
     }
 
     public void compute() throws IOException{
-
         checkRecords(testRecords);
     }
 
