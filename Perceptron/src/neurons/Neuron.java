@@ -45,7 +45,7 @@ public class Neuron {
                 }
             }
 
-            bias = bias - (d-y) * alfa;
+            bias = bias - (d-y) * alfa; // bias
 
         }
     }
