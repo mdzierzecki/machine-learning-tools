@@ -23,29 +23,29 @@ public class Neuron {
     public void train() {
         Collections.shuffle(this.records);
 
-        for (int i=0; i<records.size(); i++) {
+        for (Record record : records) {
 
-            int d = (records.get(i).type.equals(irisType)) ? 1 : 0;
+            int d = (record.type.equals(irisType)) ? 1 : 0;
 
-            double output = records.get(i).data[0] * weights[0] + records.get(i).data[1] * weights[1]
-                    + records.get(i).data[2] * weights[2] + records.get(i).data[3] * weights[3] - bias;
+            double output = record.data[0] * weights[0] + record.data[1] * weights[1]
+                    + record.data[2] * weights[2] + record.data[3] * weights[3] - bias;
 
-            double[] inputs =  Arrays.copyOf(records.get(i).data, records.get(i).data.length);
+            double[] inputs = Arrays.copyOf(record.data, record.data.length);
 
-            int y = (output>0) ? 1 : 0;
+            int y = (output > 0) ? 1 : 0;
 
             // theta
             if (d - y == -1 || d - y == 1) {
-                for (int j=0; j<inputs.length; j++) {
-                    inputs[j] = alfa*(d-y)*inputs[j];
+                for (int j = 0; j < inputs.length; j++) {
+                    inputs[j] = alfa * (d - y) * inputs[j];
                 }
 
-                for (int j=0; j<inputs.length; j++) {
-                    weights[j] = weights[j]+inputs[j];
+                for (int j = 0; j < inputs.length; j++) {
+                    weights[j] = weights[j] + inputs[j];
                 }
             }
 
-            bias = bias - (d-y) * alfa; // bias
+            bias = bias - (d - y) * alfa;
 
         }
     }
