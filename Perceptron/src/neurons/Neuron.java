@@ -17,7 +17,7 @@ public class Neuron {
         this.weights = new double[]{0, 0, 0, 0};
         this.alfa = 0.5;
         this.bias = 0;
-        this.theta = 0;
+        this.theta = -0.5;
         this.records = records;
         this.irisType = irisType;
     }
@@ -36,11 +36,15 @@ public class Neuron {
 
             int y = (output>theta) ? 1 : 0;
 
+            if (d == y) {
+                continue;
+            }
+
 //            theta = theta - (d-y) * alfa;
 
             if (d - y == -1 || d - y == 1) {
                 for (int j=0; j<inputs.length; j++) {
-                    inputs[j] = alfa*(d-y)*inputs[j];
+                    inputs[j] = (d-y)*alfa*inputs[j];
                 }
 
                 for (int j=0; j<inputs.length; j++) {
