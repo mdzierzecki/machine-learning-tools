@@ -8,12 +8,16 @@ import program.Record;
 public class Neuron {
     double[] weights;
     double alfa;
+    double bias;
+    double theta;
     List<Record> records;
     String irisType;
 
     public Neuron(List<Record> records, String irisType) {
-        this.weights = new double[]{20, 5, 2, 9};
+        this.weights = new double[]{0, 0, 0, 0};
         this.alfa = 0.5;
+        this.bias = 0;
+        this.theta = 0;
         this.records = records;
         this.irisType = irisType;
     }
@@ -30,7 +34,9 @@ public class Neuron {
 
             double[] inputs =  Arrays.copyOf(records.get(i).data, records.get(i).data.length);
 
-            int y = (output>0) ? 1: 0;
+            int y = (output>theta) ? 1 : 0;
+
+//            theta = theta - (d-y) * alfa;
 
             if (d - y == -1 || d - y == 1) {
                 for (int j=0; j<inputs.length; j++) {
@@ -40,7 +46,11 @@ public class Neuron {
                 for (int j=0; j<inputs.length; j++) {
                     weights[j] = weights[j]+inputs[j];
                 }
+
+//                bias = bias + (bias*alfa*(d-y));
             }
+
+            theta = theta - (d - y) * alfa;
 
         }
     }
@@ -52,5 +62,15 @@ public class Neuron {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Neuron{" +
+                "weights=" + Arrays.toString(weights) +
+                ", alfa=" + alfa +
+                ", bias=" + bias +
+                ", theta=" + theta +
+                ", records=" + records +
+                ", irisType='" + irisType + '\'' +
+                '}';
+    }
 }
