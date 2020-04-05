@@ -54,7 +54,7 @@ public class Compute {
         compute();
     }
 
-    public void compute() throws IOException{
+    public void compute(){
 
         checkRecords(testRecords);
     }
@@ -85,8 +85,8 @@ public class Compute {
     }
 
     public void checkRecords(List<Record> testRecords) {
-        for (int i=0; i<testRecords.size(); i++) {
-            System.out.println(testRecords.get(i).id + ". " + checkRecord(testRecords.get(i)));
+        for (Record testRecord : testRecords) {
+            System.out.println(testRecord.id + ". " + checkRecord(testRecord));
         }
     }
 }
