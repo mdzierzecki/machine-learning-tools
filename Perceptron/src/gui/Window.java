@@ -4,8 +4,6 @@ import neurons.Compute;
 import program.Record;
 import java.awt.EventQueue;
 import javax.swing.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Window {

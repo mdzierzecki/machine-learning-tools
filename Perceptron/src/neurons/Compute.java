@@ -10,9 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Compute {
-    private Neuron neuronSetosa;
-    private Neuron neuronVersicolor;
-    private Neuron neuronVirginica;
+    private Neuron neuronFirstLayer;
+    private Neuron neuronSecondLayer;
     List<Record> trainRecords;
     List<Record> testRecords;
     List<Record> recordsSecondLayer = new ArrayList<>();
@@ -32,18 +31,18 @@ public class Compute {
                 .map(Record::new)
                 .collect(Collectors.toList());
 
-        neuronSetosa = new Neuron(trainRecords, "setosa");
+        neuronFirstLayer = new Neuron(trainRecords, "setosa");
         for(int i=0; i<20000; i++) {
-            neuronSetosa.train();
+            neuronFirstLayer.train();
         }
 
         checkRecordsSecondLayer(trainRecords);
 
-        neuronVersicolor = new Neuron(recordsSecondLayer, "versicolor");
+        neuronSecondLayer = new Neuron(recordsSecondLayer, "versicolor");
         for(int i=0; i<20000; i++) {
-            neuronVersicolor.train();
+            neuronSecondLayer.train();
         }
-        System.out.println(neuronSetosa.toString());
+        System.out.println(neuronFirstLayer.toString());
 
         compute();
     }
@@ -58,8 +57,8 @@ public class Compute {
         int virginica = 0;
 
         for (int i=0; i<10; i++) {
-            if (neuronSetosa.check(record)) { setosa++; }
-            else if (neuronVersicolor.check(record)) { versicolor++; }
+            if (neuronFirstLayer.check(record)) { setosa++; }
+            else if (neuronSecondLayer.check(record)) { versicolor++; }
             else {
                 virginica++;
             }
@@ -83,7 +82,7 @@ public class Compute {
     public void checkRecordsSecondLayer(List<Record> recordsSecondGroup) {
         Collections.shuffle(recordsSecondGroup);
         for (Record testRecord : recordsSecondGroup) {
-            if (!neuronSetosa.check(testRecord)) {
+            if (!neuronFirstLayer.check(testRecord)) {
                 recordsSecondLayer.add(testRecord);
             }
         }

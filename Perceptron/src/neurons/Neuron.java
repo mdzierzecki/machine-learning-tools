@@ -1,6 +1,5 @@
 package neurons;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -40,7 +39,7 @@ public class Neuron {
             if (d == y) {
                 continue;
             }
-            
+
             for (int j = 0; j < inputs.length; j++) {
                 inputs[j] = (d - y) * alfa * inputs[j];
             }
