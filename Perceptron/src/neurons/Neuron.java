@@ -1,5 +1,6 @@
 package neurons;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -25,45 +26,37 @@ public class Neuron {
     public void train() {
         Collections.shuffle(this.records);
 
-        for (int i=0; i<records.size(); i++) {
+        for (Record record : records) {
 
-            int d = (records.get(i).type.equals(irisType)) ? 1 : 0;
+            int d = (record.type.equals(irisType)) ? 1 : 0;
 
-            double output = records.get(i).data[0] * weights[0] + records.get(i).data[1] * weights[1]
-                    + records.get(i).data[2] * weights[2] + records.get(i).data[3] * weights[3];
+            double output = record.data[0] * weights[0] + record.data[1] * weights[1]
+                    + record.data[2] * weights[2] + record.data[3] * weights[3];
 
-            double[] inputs =  Arrays.copyOf(records.get(i).data, records.get(i).data.length);
+            double[] inputs = Arrays.copyOf(record.data, record.data.length);
 
-            int y = (output>theta) ? 1 : 0;
+            int y = (output > theta) ? 1 : 0;
 
             if (d == y) {
                 continue;
             }
+            
+            for (int j = 0; j < inputs.length; j++) {
+                inputs[j] = (d - y) * alfa * inputs[j];
+            }
 
-//            theta = theta - (d-y) * alfa;
-
-            if (d - y == -1 || d - y == 1) {
-                for (int j=0; j<inputs.length; j++) {
-                    inputs[j] = (d-y)*alfa*inputs[j];
-                }
-
-                for (int j=0; j<inputs.length; j++) {
-                    weights[j] = weights[j]+inputs[j];
-                }
-
-//                bias = bias + (bias*alfa*(d-y));
+            for (int j = 0; j < inputs.length; j++) {
+                weights[j] = weights[j] + inputs[j];
             }
 
             theta = theta - (d - y) * alfa;
-
         }
     }
 
     public boolean check(Record record) {
         double output = record.data[0] * weights[0] + record.data[1] * weights[1]
                 + record.data[2] * weights[2] + record.data[3] * weights[3];
-        return output > 0;
-
+        return output > theta;
     }
 
     @Override

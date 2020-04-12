@@ -4,6 +4,7 @@ import program.Record;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ public class Compute {
     private Neuron neuronVirginica;
     List<Record> trainRecords;
     List<Record> testRecords;
+    List<Record> recordsSecondLayer = new ArrayList<>();
 
     public Compute() throws IOException {
         String path = "dataset/iristrain.csv";
@@ -22,7 +24,7 @@ public class Compute {
                 .map(Record::new)
                 .collect(Collectors.toList());
 
-//        Collections.shuffle(trainRecords);
+        Collections.shuffle(trainRecords);
 
         String pathTest = "dataset/iristest.csv";
         testRecords = Files.lines(Paths.get(pathTest))
@@ -35,27 +37,18 @@ public class Compute {
             neuronSetosa.train();
         }
 
-        neuronVersicolor = new Neuron(trainRecords, "versicolor");
+        checkRecordsSecondLayer(trainRecords);
+
+        neuronVersicolor = new Neuron(recordsSecondLayer, "versicolor");
         for(int i=0; i<20000; i++) {
             neuronVersicolor.train();
         }
-
-        neuronVirginica = new Neuron(trainRecords, "virginica");
-        for(int i=0; i<20000; i++) {
-            neuronVirginica.train();
-        }
-
         System.out.println(neuronSetosa.toString());
-
-        System.out.println(neuronVersicolor.toString());
-
-        System.out.println(neuronVirginica.toString());
 
         compute();
     }
 
     public void compute(){
-
         checkRecords(testRecords);
     }
 
@@ -66,20 +59,17 @@ public class Compute {
 
         for (int i=0; i<10; i++) {
             if (neuronSetosa.check(record)) { setosa++; }
-            if (neuronVersicolor.check(record)) { versicolor++; }
-            if (neuronVirginica.check(record)) { virginica++; }
+            else if (neuronVersicolor.check(record)) { versicolor++; }
+            else {
+                virginica++;
+            }
         }
 
         if(setosa > versicolor && setosa > virginica) {
-//            System.out.println("Result: " + setosa);
             return "setosa";
         } else if (versicolor > setosa && versicolor > virginica) {
-//            System.out.println("Result: " + versicolor);
             return "versicolor";
         } else {
-//            System.out.println("Result: " + setosa);
-//            System.out.println("Result: " + versicolor);
-//            System.out.println("Result: " + virginica);
             return "virginica";
         }
     }
@@ -87,6 +77,15 @@ public class Compute {
     public void checkRecords(List<Record> testRecords) {
         for (Record testRecord : testRecords) {
             System.out.println(testRecord.id + ". " + checkRecord(testRecord));
+        }
+    }
+
+    public void checkRecordsSecondLayer(List<Record> recordsSecondGroup) {
+        Collections.shuffle(recordsSecondGroup);
+        for (Record testRecord : recordsSecondGroup) {
+            if (!neuronSetosa.check(testRecord)) {
+                recordsSecondLayer.add(testRecord);
+            }
         }
     }
 }
