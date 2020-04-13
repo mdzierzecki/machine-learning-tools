@@ -1,3 +1,5 @@
+package models;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.Normalizer;
@@ -11,12 +13,21 @@ public class Vector {
     String normalizedText;
     String path;
     ArrayList<Integer> vector;
+    boolean textOnly;
 
     public Vector(String language, String path) {
         this.language = language;
         this.path = path;
         this.vector = new ArrayList<>();
         readText();
+        normalizeText();
+        countChars();
+    }
+
+    public Vector(String text, boolean textOnly) {
+        this.vector = new ArrayList<>();
+        this.text = text;
+        this.textOnly = true;
         normalizeText();
         countChars();
     }

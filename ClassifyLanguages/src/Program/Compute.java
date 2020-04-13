@@ -1,3 +1,8 @@
+package Program;
+
+import models.Neuron;
+import models.Vector;
+
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Collections;
@@ -50,7 +55,7 @@ public class Compute {
         String result = "N/A";
 
         for (String key : vals.keySet()) {
-            if (vals.get(key) == min) {
+            if (vals.get(key).equals(min)) {
                 result = key;
             }
         }
