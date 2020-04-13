@@ -42,7 +42,6 @@ public class Neuron {
                 inputs[j] = record.getVector().get(j);
             }
 
-
             for (int j = 0; j < inputs.length; j++) {
                 inputs[j] = (d - y) * alpha * inputs[j];
             }
@@ -58,9 +57,17 @@ public class Neuron {
     public boolean check(Vector record) {
         double output = 0;
         for (int i=0; i<26; i++) {
-            output += record.getVector().get(0) * weights[i];
+            output += record.getVector().get(i) * this.weights[i];
         }
-
         return output > theta;
     }
+
+    public double distance(Vector record) {
+        double output = 0;
+        for (int i=0; i<26; i++) {
+            output += record.getVector().get(i) * this.weights[i];
+        }
+        return output + theta;
+    }
+
 }

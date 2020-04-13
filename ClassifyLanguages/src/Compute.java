@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.lang.Math;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Compute {
 
@@ -27,23 +31,31 @@ public class Compute {
     }
 
     public String checkRecord(Vector record) {
-        int czech = 0;
-        int german = 0;
-        int english = 0;
+        Map<String, Double> vals = new HashMap<>();
 
-        for (int i=0; i<10; i++) {
-            if (czechNeuron.check(record)) { czech++; }
-            else if (germanNeuron.check(record)) { german++; }
-            else if (englishNeuron.check(record)){ english++; }
+        // if perceptron activated, then put distance between output and theta to Map
+        if (czechNeuron.check(record)) {
+            vals.put("Czech", Math.abs(czechNeuron.distance(record)));
+        }
+        if (germanNeuron.check(record)) {
+            vals.put("German", Math.abs(germanNeuron.distance(record)));
+        }
+        if (englishNeuron.check(record)){
+            vals.put("English", Math.abs(englishNeuron.distance(record)));
         }
 
-        if(czech > german && czech > english) {
-            return "Czech";
-        } else if (german > english && german > czech) {
-            return "German";
-        } else {
-            return "English";
+        // find min distance from Map
+        Double min = Collections.min(vals.values());
+
+        String result = "N/A";
+
+        for (String key : vals.keySet()) {
+            if (vals.get(key) == min) {
+                result = key;
+            }
         }
+
+        return result;
     }
 
     // import text to vectors

@@ -1,8 +1,6 @@
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-
 
         // test data
         Vector testCzech = new Vector("testdata/czech");
@@ -13,9 +11,6 @@ public class Main {
         c.train();
 
         System.out.println(c.checkRecord(testGerman));
-
-
-
     }
 
 
