@@ -21,6 +21,15 @@ public class Vector {
         countChars();
     }
 
+    public Vector(String path) {
+        this.language = null;
+        this.path = path;
+        this.vector = new ArrayList<>();
+        readText();
+        normalizeText();
+        countChars();
+    }
+
 
     private void readText(){
         StringBuilder stringBuilder = new StringBuilder();

@@ -3,12 +3,16 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
 
-        Vector vc = new Vector("de", "languages/german/1");
-
         ArrayList<Vector> result = textsToVectors();
 
-        System.out.println(result);
+        Neuron germanNeuron = new Neuron(result, "de");
+        germanNeuron.train();
 
+        // test
+
+        Vector testV = new Vector("testdata/czech");
+
+        System.out.println(germanNeuron.check(testV));
 
     }
 
