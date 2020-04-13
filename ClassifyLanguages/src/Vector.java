@@ -29,7 +29,6 @@ public class Vector {
         try {
             Scanner myReader = new Scanner(myObj);
 
-
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 stringBuilder.append(data);
@@ -46,15 +45,19 @@ public class Vector {
     private void normalizeText(){
         String normalized = Normalizer.normalize(this.text, Normalizer.Form.NFD);
         String accentRemoved = normalized.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-        this.normalizedText = accentRemoved.replaceAll("[^A-Za-z]+", "");
-
+        String lowerCaseText = accentRemoved.toLowerCase();
+        this.normalizedText = lowerCaseText.replaceAll("[^A-Za-z]+", "");
     }
 
     private void countChars() {
-        HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
-        this.normalizedText.chars().forEach(letter -> hm.put(letter, (hm.containsKey(letter) ? hm.get(letter) : 0) + 1));
-        hm.forEach((c, i) -> this.vector.add(i));
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for (int i=97; i<=122; i++) {
+            hm.put(i, 0);
+        }
 
+        this.normalizedText.chars().forEach(letter -> hm.put(letter, (hm.containsKey(letter) ? hm.get(letter) : 0) + 1));
+
+        hm.forEach((c, i) -> this.vector.add(i));
     }
 
     public String getLanguage() {
