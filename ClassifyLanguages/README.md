@@ -14,7 +14,7 @@ We create 1 layer of K perceptrons (where K is the number of languages, suppose 
 
 Teaching the perceptrons is with a discrete (0-1) activation function of each perceptron.
 
-Becouse of high similarity of results, we need to use Euclidean measure to figur out which language it is (sometimes two perceoptrons are going to be activated).
+Becouse of high similarity of results, we need to use Euclidean measure to figure out which language it is (sometimes two perceoptrons are going to be activated).
 
 Moreover I provided simple GUI to check any new text.
 
