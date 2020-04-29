@@ -15,6 +15,10 @@ public class Record {
         }
     }
 
+    public double calculateDistance(Record rec, Centroid centroid) {
+        return 1.0;
+    }
+
     @Override
     public String toString() {
         return "Record{" +

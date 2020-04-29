@@ -17,5 +17,10 @@ public class Main {
                 .collect(Collectors.toList());
 
         System.out.println(trainRecords);
+
+        System.out.println("================");
+
+        Centroid c = new Centroid();
+        System.out.println(c);
     }
 }
