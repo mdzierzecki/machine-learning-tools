@@ -1,16 +1,26 @@
-public class Record {
-    private int Number;
-    private double sepalLength;
-    private double sepalWidth;
-    private double petalLength;
-    private double petalWidth;
-    private String result;
+import java.util.Arrays;
 
-    public Record(int number, double sepalLength, double sepalWidth, double petalLength, double petalWidth) {
-        Number = number;
-        this.sepalLength = sepalLength;
-        this.sepalWidth = sepalWidth;
-        this.petalLength = petalLength;
-        this.petalWidth = petalWidth;
+public class Record {
+    private int id;
+    public double[] data = new double[4];
+    private String type;
+
+    public Record (String fileLine) {
+        String[] tokens = fileLine.split(",");
+
+        id = Integer.parseInt(tokens[0].replaceAll("\"", ""));
+
+        for (int i=0; i<4; i++){
+            data[i] = Double.parseDouble(tokens[i + 1]);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", data=" + Arrays.toString(data) +
+                ", type='" + type + '\'' +
+                '}';
     }
 }
