@@ -7,27 +7,61 @@ import java.util.Random;
 
 public class Centroid {
     private String name;
-    private double[] cords = new double[4];
+    private double[] cords;
     private List<Record> assignedRecords;
 
-    public Centroid(String name, double[] cords) {
+    // generate random Centroid
+    public Centroid(String name, int cordsNum) {
         this.name = name;
-        this.cords = cords;
         this.assignedRecords = new ArrayList<>();
+        this.cords = new double[cordsNum];
+
+        for (int i=0; i<cordsNum; i++) {
+            this.cords[i] = new Random().nextDouble() * 10;
+        }
     }
 
-    // generate random Models.Centroid
-    public Centroid(String name) {
-        this.name = name;
-        this.assignedRecords = new ArrayList<>();
-        this.cords[0] = new Random().nextDouble() * 10;
-        this.cords[1] = new Random().nextDouble() * 10;
-        this.cords[2] = new Random().nextDouble() * 10;
-        this.cords[3] = new Random().nextDouble() * 10;
+    public void averageCords(){
+        if (countRecords() > 0) {
+            double[] newCords = new double[cords.length];
+
+            for (Record record: this.assignedRecords) {
+                for (int i=0; i<cords.length; i++) {
+                    newCords[i] += record.getData()[i];
+                }
+            }
+
+            for (int i=0; i<cords.length; i++) {
+                this.cords[i] = newCords[i]/assignedRecords.size();
+            }
+
+        } else {
+            for (int i=0; i<cords.length; i++) {
+                this.cords[i] = new Random().nextDouble() * 10;
+            }
+        }
+
+    }
+
+    public double avarageDistance(){
+        double addedDistance = 0;
+        for (Record record: this.assignedRecords) {
+            addedDistance += record.getDistanceFromCentroid();
+        }
+
+        return addedDistance/this.assignedRecords.size();
+    }
+
+    public int countRecords(){
+        return this.assignedRecords.size();
     }
 
     public void addRecord(Record record) {
         this.assignedRecords.add(record);
+    }
+
+    public void resetRecords(){
+        this.assignedRecords = new ArrayList<>();
     }
 
     public double[] getCords() {
@@ -38,6 +72,14 @@ public class Centroid {
         this.cords = cords;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Record> getAssignedRecords() {
         return assignedRecords;
     }
@@ -46,8 +88,9 @@ public class Centroid {
         this.assignedRecords = assignedRecords;
     }
 
-    @Override
+
+        @Override
     public String toString() {
-        return this.name;
+        return this.name + " | Number of records in cluster: " + this.countRecords() + "| average distance: " + this.avarageDistance() +  " | cords: " + Arrays.toString(cords);
     }
 }

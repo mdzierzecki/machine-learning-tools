@@ -11,10 +11,11 @@ import java.util.stream.Collectors;
 
 public class Utils {
     public static double calculateDistance(Record rec, Centroid centroid) {
-        double toRoot = Math.pow(Math.abs(rec.getData()[0] - centroid.getCords()[0]), 2)
-                + Math.pow(Math.abs(rec.getData()[1] - centroid.getCords()[1]), 2)
-                + Math.pow(Math.abs(rec.getData()[2] - centroid.getCords()[2]), 2)
-                + Math.pow(Math.abs(rec.getData()[3] - centroid.getCords()[3]), 2);
+        double toRoot = 0;
+
+        for (int i=0; i<rec.getData().length; i++) {
+            toRoot += Math.pow(Math.abs(rec.getData()[i] - centroid.getCords()[i]), 2);
+        }
 
         return Math.sqrt(toRoot);
     }
