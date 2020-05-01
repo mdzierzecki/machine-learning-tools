@@ -1,7 +1,6 @@
 package Models;
 
-import Models.Centroid;
-import Program.Utils;
+import Utils.Utils;
 
 import java.util.*;
 
@@ -82,6 +81,6 @@ public class Record {
 
     @Override
     public String toString() {
-        return "Models.Record nr. " + this.id + ", centroid is [" + this.c + "] with distance: " + this.distanceFromCentroid;
+        return "Record nr. " + this.id + ", centroid is [" + this.c + "] with distance: " + this.distanceFromCentroid;
     }
 }
