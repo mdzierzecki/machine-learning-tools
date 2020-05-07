@@ -26,6 +26,7 @@ public class Main {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         System.out.println();
         System.out.println("================ S T A R T   I N F O =====================");
         System.out.println("Number of columns in csv: " + trainRecords.get(0).data.length);
@@ -37,7 +38,7 @@ public class Main {
         System.out.println("K-means computing is going to start in few seconds...");
         System.out.println();
 
-        for (int i=1; i<5000; i++) {
+        for (int i=1; i<50; i++) {
             System.out.println("Iteration number " + i);
             Compute.populateCluster(trainRecords, centroidList);
             System.out.println("=====================================");
