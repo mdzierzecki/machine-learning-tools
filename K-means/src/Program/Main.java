@@ -38,7 +38,7 @@ public class Main {
         System.out.println("K-means computing is going to start in few seconds...");
         System.out.println();
 
-        for (int i=1; i<50; i++) {
+        for (int i=1; i<5000; i++) {
             System.out.println("Iteration number " + i);
             Compute.populateCluster(trainRecords, centroidList);
             System.out.println("=====================================");
@@ -49,7 +49,9 @@ public class Main {
         System.out.println("================ S U M M A R Y =====================");
         for (Centroid centroid: centroidList) {
             System.out.println(centroid.toString());
+            System.out.println("Centroid records: " + centroid.getAssignedRecords());
         }
+
 
     }
 }

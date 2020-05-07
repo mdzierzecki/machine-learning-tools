@@ -40,7 +40,6 @@ public class Centroid {
                 this.cords[i] = new Random().nextDouble() * 10;
             }
         }
-
     }
 
     public double avarageDistance(){

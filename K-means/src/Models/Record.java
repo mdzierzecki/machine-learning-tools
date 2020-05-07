@@ -18,6 +18,7 @@ public class Record {
         for (int i=0; i<tokens.length-2; i++){
             data[i] = Double.parseDouble(tokens[i + 1]);
         }
+        type = tokens[5];
     }
 
     public void assignToCentroid(List<Centroid> centroidList){
@@ -80,6 +81,6 @@ public class Record {
 
     @Override
     public String toString() {
-        return "Record nr. " + this.id + ", centroid is [" + this.c.getName() + "] with distance: " + this.distanceFromCentroid;
+        return "Record nr. " + this.id + " type is  " + this.type;
     }
 }
