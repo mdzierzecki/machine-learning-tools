@@ -17,6 +17,7 @@ public class Record {
         this.trunkSize = tokens[4];
         this.safetyLevel = tokens[5];
         this.result = tokens[6];
+        // d
     }
 
     @Override
