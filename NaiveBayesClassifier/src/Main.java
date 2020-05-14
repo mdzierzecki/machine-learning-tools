@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -12,29 +12,66 @@ public class Main {
                 .map(Record::new)
                 .collect(Collectors.toList());
 
+        boolean ifContinue;
+
+        do {
+            System.out.println("Enter a information for a record");
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter purchase cost");
+            String purchaseCost = scanner.nextLine();
+            System.out.println("Enter maintenance cost");
+            String maintenanceCost = scanner.nextLine();
+            System.out.println("Enter number of doors");
+            String numberOfDoors = scanner.nextLine();
+            System.out.println("Enter amount of people");
+            String peopleAmount = scanner.nextLine();
+            System.out.println("Enter trunk size");
+            String trunkSize = scanner.nextLine();
+            System.out.println("Enter safety level");
+            String safetyLevel = scanner.nextLine();
+            System.out.println("Should I smooth all parameters? (true/false) ");
+            boolean ifSmoothing = scanner.nextBoolean();
+            System.out.println("Thank you. Result of your record is: ");
+
+            Record testRecord = new Record(purchaseCost, maintenanceCost, numberOfDoors, peopleAmount, trunkSize, safetyLevel, "N/A");
+
+            System.out.println(calculateResult(testRecord, trainRecords, ifSmoothing));
+
+            System.out.println("Do you want to input another record? (true/false)");
+            ifContinue = scanner.nextBoolean();
+            scanner.close();
+        }
+        while (ifContinue);
+
+        System.out.println("Goodbye!");
+
+    }
+
+    public static String calculateResult(Record testRecord, List<Record> trainRecords, boolean ifSmoothing){
         int unacc_result_amount = 0;
         int acc_result_amount = 0;
         int good_result_amount = 0;
         int vgood_result_amount = 0;
 
-        for (Record record: trainRecords) {
-            if(record.getResult().equals("unacc")) unacc_result_amount++;
-            if(record.getResult().equals("acc")) acc_result_amount++;
-            if(record.getResult().equals("good")) good_result_amount++;
-            if(record.getResult().equals("vgood")) vgood_result_amount++;
+
+        for (Record record : trainRecords) {
+            if (record.getResult().equals("unacc")) unacc_result_amount++;
+            if (record.getResult().equals("acc")) acc_result_amount++;
+            if (record.getResult().equals("good")) good_result_amount++;
+            if (record.getResult().equals("vgood")) vgood_result_amount++;
         }
 
-        System.out.println(unacc_result_amount);
-        System.out.println(acc_result_amount);
-        System.out.println(good_result_amount);
-        System.out.println(vgood_result_amount);
+        int all_results = unacc_result_amount + acc_result_amount + good_result_amount + vgood_result_amount;
 
-        Record testRecord = new Record("vhigh", "vhigh", "4", "4", "big", "high", "A");
+//        System.out.println(unacc_result_amount);
+//        System.out.println(acc_result_amount);
+//        System.out.println(good_result_amount);
+//        System.out.println(vgood_result_amount);
 
-        double[] res_unacc = new double[7];
-        double[] res_acc = new double[7];
-        double[] res_good = new double[7];
-        double[] res_vgood = new double[7];
+        double[] res_unacc = new double[6];
+        double[] res_acc = new double[6];
+        double[] res_good = new double[6];
+        double[] res_vgood = new double[6];
 
         for (Record record: trainRecords) {
 
@@ -67,46 +104,80 @@ public class Main {
             if(record.getSafetyLevel().equals(testRecord.getSafetyLevel()) && record.getResult().equals("vgood")) res_vgood[5]++;
         }
 
-        double rezulcik_unacc = 1;
+        Map<String, Double> counterMap = new HashMap<>();
+        counterMap.put("unacc", 1.0);
+        counterMap.put("acc", 1.0);
+        counterMap.put("good", 1.0);
+        counterMap.put("vgood", 1.0);
 
-        for (int i=0; i<res_acc.length-1; i++) {
-            rezulcik_unacc *= res_unacc[i]/unacc_result_amount;
+
+        for (int i=0; i<=res_unacc.length; i++) {
+            if(i != res_unacc.length) {
+                double current_value = counterMap.get("unacc");
+                counterMap.replace("unacc", current_value *= res_unacc[i]/unacc_result_amount);
+            } else {
+                double current_value = counterMap.get("unacc");
+                counterMap.replace("unacc", current_value *= (double) unacc_result_amount /all_results);
+            }
         }
 
-        rezulcik_unacc *= (double) unacc_result_amount/(unacc_result_amount+acc_result_amount+good_result_amount+vgood_result_amount);
-
-        double rezulcik_acc = 1;
-
-        for (int i=0; i<res_acc.length-1; i++) {
-            rezulcik_acc *= res_acc[i]/acc_result_amount;
+        for (int i=0; i<=res_acc.length; i++) {
+            if(i != res_acc.length) {
+                double current_value = counterMap.get("acc");
+                counterMap.replace("acc", current_value *= res_acc[i]/acc_result_amount);
+            } else {
+                double current_value = counterMap.get("acc");
+                counterMap.replace("acc", current_value *= (double) acc_result_amount /all_results);
+            }
         }
 
-        rezulcik_acc *= (double) acc_result_amount/(unacc_result_amount+acc_result_amount+good_result_amount+vgood_result_amount);
 
-        double rezulcik_good= 1;
-
-        for (int i=0; i<res_acc.length-1; i++) {
-            rezulcik_good *= res_good[i]/good_result_amount;
+        for (int i=0; i<=res_good.length; i++) {
+            if(i != res_good.length) {
+                double current_value = counterMap.get("good");
+                counterMap.replace("good", current_value *= res_good[i]/good_result_amount);
+            } else {
+                double current_value = counterMap.get("good");
+                counterMap.replace("good", current_value *= (double) good_result_amount /all_results);
+            }
         }
 
-        rezulcik_good *= (double) good_result_amount/(unacc_result_amount+acc_result_amount+good_result_amount+vgood_result_amount);
-
-        double rezulcik_vgood = 1;
-
-        for (int i=0; i<res_acc.length-1; i++) {
-            rezulcik_vgood *= res_vgood[i]/vgood_result_amount;
+        for (int i=0; i<=res_vgood.length; i++) {
+            if(i != res_vgood.length) {
+                double current_value = counterMap.get("vgood");
+                counterMap.replace("vgood", current_value *= res_vgood[i]/vgood_result_amount);
+            } else {
+                double current_value = counterMap.get("vgood");
+                counterMap.replace("vgood", current_value *= (double) vgood_result_amount /all_results);
+            }
         }
 
-        rezulcik_vgood *= (double) vgood_result_amount/(unacc_result_amount+acc_result_amount+good_result_amount+vgood_result_amount);
+//        System.out.println(counterMap);
+
+        Double max = Collections.max(counterMap.values());
+        System.out.println("Max: " + max);
+        String biggestProbability = "";
+        for (String key : counterMap.keySet()) {
+            if (counterMap.get(key).equals(max)) {
+                biggestProbability = key;
+            }
+        }
 
 
+        double sum = counterMap.values().stream().reduce(0.0, Double::sum);
 
-        System.out.println("Result unacc " + rezulcik_unacc);
-        System.out.println("Result acc " + rezulcik_acc);
-        System.out.println("Result good " + rezulcik_good);
-        System.out.println("Result good " + rezulcik_vgood);
+        System.out.println("Sum: " + sum);
 
-        System.out.println(rezulcik_unacc>rezulcik_acc);
+        System.out.println("Probablity: " + max/sum + "%");
+//
+//        System.out.println("Probablity unacc: " + counterMap.get("unacc")/sum);
+//        System.out.println("Probablity acc: " + counterMap.get("acc")/sum);
+//        System.out.println("Probablity good: " + counterMap.get("good")/sum);
+//        System.out.println("Probablity vgood: " + counterMap.get("vgood")/sum);
 
+        return biggestProbability;
     }
+
 }
+
+
