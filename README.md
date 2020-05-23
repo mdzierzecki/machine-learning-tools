@@ -1,4 +1,4 @@
-# Machine learning apps
+# Machine learning tools
 
 <b>Classify languages [Java]</b> - it is a language classifier (English/Czech/German), which uses perceptron to do it
 <br>
